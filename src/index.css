@@ -1,68 +1,83 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+}
 
+p {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+}
+
+button,
 a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
 }
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  @apply text-5xl;
+}
+h2 {
+  @apply text-4xl;
+}
+h3 {
+  @apply text-3xl;
+}
+h4 {
+  @apply text-2xl;
+}
+h5 {
+  @apply text-xl;
+}
+h6 {
+  @apply text-lg;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+.respPx20 {
+  @apply 900px:px-20 700px:px-16 550px:px-10 400px:px-5 px-3;
 }
-button:hover {
-  border-color: #646cff;
+.transitional {
+  @apply transition-all duration-300 ease-in-out;
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.transitional:hover {
+  @apply transition-all duration-300 ease-in-out;
 }
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.resp3ColGrid {
+  @apply grid 1000px:grid-cols-3 650px:grid-cols-2 grid-cols-1;
+}
+.resp4ColGrid {
+  @apply grid 950px:grid-cols-4 750px:grid-cols-3 500px:grid-cols-2 grid-cols-1;
+}
+.btn1 {
+  @apply bg-white text-charcoal  hover:bg-transparent border-white  hover:text-white;
+}
+.btn1Alt {
+  @apply bg-charcoal text-white  hover:bg-transparent border-charcoal  hover:text-charcoal;
+}
+.btn2 {
+  @apply bg-transparent text-white border-white hover:bg-white hover:text-charcoal;
+}
+.btn {
+  @apply font-medium p-2 px-4  rounded border transition-all duration-300 ease-in-out;
 }
