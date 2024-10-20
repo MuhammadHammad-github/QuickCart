@@ -168,11 +168,9 @@ const AddProductModal = ({ open, setOpen, refetch, defaultState }) => {
     details: "",
   };
   const [customFormData, setCustomFormData] = useState(defaultFormData);
-  console.log(product);
   const handleSubmitProduct = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    console.log(selectedColors);
     if (selectedColors && selectedColors?.length !== 0)
       formData.append("colors", selectedColors[0] === "" ? [] : selectedColors);
     if (selectedImages.length === 0)
@@ -245,13 +243,14 @@ const AddProductModal = ({ open, setOpen, refetch, defaultState }) => {
       colors,
       images,
     } = product;
+    console.log(category);
     setSelectedImages(images);
-    setSelectedCategory(category._id);
+    setSelectedCategory(category);
     setSelectedColors(colors);
     setCustomFormData({
       name,
-      category: category._id,
-      subCategory: subCategory._id,
+      category: category,
+      subCategory: subCategory,
       originalPrice,
       salePrice,
       stock,
@@ -259,6 +258,7 @@ const AddProductModal = ({ open, setOpen, refetch, defaultState }) => {
       details,
     });
   }, [product]);
+  console.log(selectedCategory);
   return (
     <MyModal
       openType2={open}
@@ -295,6 +295,7 @@ const AddProductModal = ({ open, setOpen, refetch, defaultState }) => {
           onChange={(e) => {
             setSelectedCategory(e.target.value);
           }}
+          value={selectedCategory}
           label={"Select Category"}
         >
           {categories?.map((category, index) => {
@@ -404,7 +405,6 @@ const AddProductModal = ({ open, setOpen, refetch, defaultState }) => {
         />
         <div className="flex items-center gap-2">
           {selectedImages.map((image, index) => {
-            console.log(image);
             return (
               <CustomImageInput
                 imgSrc={image}
@@ -449,7 +449,6 @@ const CustomImageInput = ({ setSelectedImages, imgSrc, index }) => {
     });
   };
   useEffect(() => {
-    console.log(imgSrc);
     if (typeof imgSrc === "string") {
       convertImageUrlToFile();
     }

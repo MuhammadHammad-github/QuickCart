@@ -3,9 +3,10 @@ import Sidebar from "./components/Sidebar";
 import MyTable from "./components/MyTable";
 import MyModal from "../../components/MyModal";
 import useGetOrdersByBuyer from "../../hooks/highLevelHooks/orders/useGetOrdersByBuyer";
+import { CircularProgress } from "@mui/material";
 
 const BuyerOrders = () => {
-  const { buyerOrders } = useGetOrdersByBuyer();
+  const { buyerOrders, fetching } = useGetOrdersByBuyer();
   const [reversedBuyerOrders, setReverseBuyerOrders] = useState([]);
   const [sortedOrders, setSortedOrders] = useState([]);
   const defaultStateModal = { show: false, products: [] };
@@ -52,6 +53,7 @@ const BuyerOrders = () => {
         <div className="flex flex-col gap-8 my-10">
           <div>
             <h4 className="my-4">Orders</h4>
+            {fetching && <CircularProgress />}
             <MyTable
               cols={["Status", "Shipping Address", "Total Amount", "Details"]}
             >
