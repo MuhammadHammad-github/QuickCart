@@ -4,7 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Roboto", system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -14,6 +14,7 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  @apply !text-secondary;
 }
 h1,
 h2,
@@ -69,15 +70,87 @@ h6 {
 .resp4ColGrid {
   @apply grid 950px:grid-cols-4 750px:grid-cols-3 500px:grid-cols-2 grid-cols-1;
 }
-.btn1 {
-  @apply bg-white text-charcoal  hover:bg-transparent border-white  hover:text-white;
-}
-.btn1Alt {
-  @apply bg-charcoal text-white  hover:bg-transparent border-charcoal  hover:text-charcoal;
-}
-.btn2 {
-  @apply bg-transparent text-white border-white hover:bg-white hover:text-charcoal;
-}
+
 .btn {
-  @apply font-medium p-2 px-4  rounded border transition-all duration-300 ease-in-out;
+  @apply font-medium p-2 px-4  rounded border transition-all shadow duration-300 ease-in-out;
+}
+.btn-lg {
+  @apply !p-3 !px-6;
+}
+.btn-primary {
+  @apply bg-gradient-to-r hover:bg-gradient-to-l from-primary-300 to-primary  !text-white border-primary-300 disabled:from-neutral-400 disabled:to-neutral-400;
+}
+
+.inputIcon {
+  @apply absolute top-1/2 -translate-y-1/2 right-5;
+}
+.fadeIn {
+  animation-name: fadeIn;
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+}
+.productCardImage:hover .productCardImageHover {
+  @apply top-[70%] opacity-100;
+}
+.productCardImage:hover .productImage1 {
+  opacity: 0;
+}
+.productCardImage .productImage2 {
+  opacity: 0;
+}
+.productCardImage:hover .productImage2 {
+  opacity: 1;
+}
+.categoryCard:hover a {
+  @apply text-primary;
+}
+
+.image-zoom-container {
+  background-size: 130%;
+}
+/* Scrollbar container */
+::-webkit-scrollbar {
+  width: 12px; /* Width of the scrollbar */
+  height: 12px; /* Height of the scrollbar for horizontal scroll */
+}
+
+.smallScrollBar::-webkit-scrollbar {
+  @apply size-1;
+}
+/* Scrollbar track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Track color */
+  border-radius: 10px;
+}
+
+/* Scrollbar handle (thumb) */
+::-webkit-scrollbar-thumb {
+  @apply bg-neutral2 border-2 border-neutral2 rounded-lg;
+}
+
+/* Scrollbar thumb when hovered */
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-neutral2-400;
+}
+
+/* input:invalid {
+  @apply border-primary;
+} */
+/* input:valid {
+  @apply border-green-500;
+} */
+input:user-valid {
+  @apply border-green-500;
+}
+input:user-invalid {
+  @apply border-primary;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 100;
+  }
 }
