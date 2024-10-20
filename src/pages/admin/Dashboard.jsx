@@ -3,10 +3,11 @@ import Sidebar from "./components/Sidebar";
 import MyTable from "./components/MyTable";
 import useGetTotalBuyers from "../../hooks/highLevelHooks/accounts/buyer/useGetTotalBuyers";
 import useGetTotalSellers from "../../hooks/highLevelHooks/accounts/seller/useGetTotalSellers";
+import { CircularProgress } from "@mui/material";
 
 const Dashboard = () => {
-  const { totalBuyers } = useGetTotalBuyers();
-  const { totalSellers } = useGetTotalSellers();
+  const { totalBuyers, fetching: fetchingBuyers } = useGetTotalBuyers();
+  const { totalSellers, fetching: fetchingSellers } = useGetTotalSellers();
   const products = [
     {
       images: ["/shoes.png", "/shoes_white.png"],
@@ -63,8 +64,16 @@ const Dashboard = () => {
       <Sidebar />
       <div className="900px:col-span-9  400px:col-span-12 350px:col-span-11 col-span-10 max-w-full  ">
         <div className="flex flex-wrap gap-8 justify-center border-b-2 pb-8">
-          <MyCard text1={totalBuyers} text2={"Total Buyers"} />
-          <MyCard text1={totalSellers} text2={"Total Sellers"} />
+          <MyCard
+            text1={totalBuyers}
+            text2={"Total Buyers"}
+            loading={fetchingBuyers}
+          />
+          <MyCard
+            text1={totalSellers}
+            text2={"Total Sellers"}
+            loading={fetchingSellers}
+          />
         </div>
       </div>
     </div>
@@ -72,10 +81,10 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-const MyCard = ({ text1, text2 }) => {
+const MyCard = ({ text1, text2, loading }) => {
   return (
     <div className="p-10   shadow rounded-md flex items-center justify-center flex-col border-accent border">
-      <h6>{text1}</h6>
+      {loading ? <CircularProgress /> : <h6>{text1}</h6>}
       <h4>{text2}</h4>
     </div>
   );
