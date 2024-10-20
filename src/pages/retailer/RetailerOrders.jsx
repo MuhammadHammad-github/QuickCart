@@ -5,9 +5,10 @@ import useGetOrdersByRetailer from "../../hooks/highLevelHooks/orders/useGetOrde
 import MyModal from "../../components/MyModal";
 import MyButton from "../../components/MyButton";
 import useUpdateOrder from "../../hooks/highLevelHooks/orders/useUpdateOrder";
+import { CircularProgress } from "@mui/material";
 
 const RetailerOrders = () => {
-  const { retailerOrders, getOrders } = useGetOrdersByRetailer();
+  const { retailerOrders, getOrders, fetching } = useGetOrdersByRetailer();
   const defaultStateModal = { show: false, products: [] };
   const defaultStateStatusModal = { show: false, id: null, status: null };
   const [open, setOpen] = useState(defaultStateModal);
@@ -79,6 +80,7 @@ const RetailerOrders = () => {
         <div className="flex flex-col gap-8 my-10">
           <div>
             <h4 className="my-4">Orders</h4>
+            {fetching && <CircularProgress />}
             <MyTable
               cols={[
                 "Status",
