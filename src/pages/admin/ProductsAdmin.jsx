@@ -8,19 +8,33 @@ import useGetRetailerProducts from "../../hooks/highLevelHooks/products/useGetRe
 import useGetProducts from "../../hooks/highLevelHooks/products/useGetProducts";
 import useFeatureUnFeatureProduct from "../../hooks/highLevelHooks/products/useFeatureUnFeatureProduct";
 import { Star, StarBorder } from "@mui/icons-material";
+import { CircularProgress } from "@mui/material";
 
 const ProductsAdmin = () => {
   const [productsToShow, setProductsToShow] = useState([]);
   const params = useParams();
   const { category, subCategory, store } = params;
-  const { productsByCategory, getProductsByCategory } =
-    useGetProductsByCategory(category);
-  const { productsBySubCategory, getProductsBySubCategory } =
-    useGetProductsBySubCategory(subCategory);
+  const {
+    productsByCategory,
+    getProductsByCategory,
+    fetching: fetchingProductsByCategory,
+  } = useGetProductsByCategory(category);
+  const {
+    productsBySubCategory,
+    getProductsBySubCategory,
+    fetching: fetchingProductsBySubCategory,
+  } = useGetProductsBySubCategory(subCategory);
   console.log(productsBySubCategory);
-  const { retailerProducts, getProducts: getProductsByRetailer } =
-    useGetRetailerProducts(store);
-  const { products, getProducts } = useGetProducts();
+  const {
+    retailerProducts,
+    getProducts: getProductsByRetailer,
+    fetching: fetchingProductsByRetailer,
+  } = useGetRetailerProducts(store);
+  const {
+    products,
+    getProducts,
+    fetching: fetchingProducts,
+  } = useGetProducts();
   const refetch = () => {
     if (category && category !== "null") getProductsByCategory();
     else if (subCategory && subCategory !== "null") getProductsBySubCategory();
@@ -99,6 +113,10 @@ const ProductsAdmin = () => {
       <Sidebar />
       <div className="900px:col-span-9  400px:col-span-12 350px:col-span-11 col-span-10 max-w-full ">
         <h3 className="my-10"> Seller Products</h3>
+        {(fetchingProducts ||
+          fetchingProductsByCategory ||
+          fetchingProductsBySubCategory ||
+          fetchingProductsByRetailer) && <CircularProgress />}
         <MyTable
           cols={[
             "Image",
