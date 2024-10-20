@@ -15,7 +15,7 @@ const useCreateAccountAdmin = () => {
   const createAccount = (data) => refetch(data);
   useEffect(() => {
     if (fetchedData) {
-      fetchedData.success && navigate("/admin/login");
+      fetchedData.success && navigate("/loginAdmin");
     }
   }, [fetchedData]);
   return { createAccount, fetching };

@@ -70,8 +70,8 @@ const CategoriesAdmin = () => {
 export default CategoriesAdmin;
 const AddCategoryModal = ({ open, setOpen, refetch, defaultState }) => {
   const [name, setName] = useState("");
-  const { createCategory } = useCreateCategory();
-  const { updateCategory } = useUpdateCategory(open.id);
+  const { createCategory, fetching: creating } = useCreateCategory();
+  const { updateCategory, fetching: updating } = useUpdateCategory(open.id);
   const { category } = useGetOneCategory(open?.id);
   console.log(open?.id);
   console.log(category);
@@ -144,7 +144,11 @@ const AddCategoryModal = ({ open, setOpen, refetch, defaultState }) => {
           type="file"
           required={open.type === "add"}
         />
-        <MyButton text={open.type === "add" ? "Add" : "Edit"} type="submit" />
+        <MyButton
+          text={open.type === "add" ? "Add" : "Edit"}
+          type="submit"
+          loading={creating || updating}
+        />
       </form>
     </MyModal>
   );
@@ -155,7 +159,7 @@ const AddSubCategoryModal = ({
   defaultStateSubCat,
   categories,
 }) => {
-  const { createSubCategory } = useCreateSubCategory();
+  const { createSubCategory, fetching } = useCreateSubCategory();
   const handleAddSubCategory = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -208,7 +212,7 @@ const AddSubCategoryModal = ({
           type="file"
           required
         />
-        <MyButton text={"Add"} type="submit" />
+        <MyButton text={"Add"} type="submit" loading={fetching} />
       </form>
     </MyModal>
   );
