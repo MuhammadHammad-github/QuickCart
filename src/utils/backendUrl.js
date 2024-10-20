@@ -1,2 +1,2 @@
-const backendUrl = "https://quickcartbackend.glitch.me";
+const backendUrl = "https://quickcartbackend.glitch.m";
 export default backendUrl;
