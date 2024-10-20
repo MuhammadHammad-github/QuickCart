@@ -12,9 +12,10 @@ import useDeleteCategory from "../../hooks/highLevelHooks/categories/useDeleteCa
 import { useNavigate } from "react-router-dom";
 import useGetOneCategory from "../../hooks/highLevelHooks/categories/useGetOneCategory";
 import useUpdateCategory from "../../hooks/highLevelHooks/categories/useUpdateCategory";
+import { CircularProgress } from "@mui/material";
 
 const CategoriesAdmin = () => {
-  const { categories, getCategories } = useGetCategories();
+  const { categories, getCategories, fetching } = useGetCategories();
   const defaultStateCat = { show: false, type: "add" };
   const defaultStateSubCat = {
     show: false,
@@ -56,12 +57,16 @@ const CategoriesAdmin = () => {
             onClick={() => toggleCategoryModal()}
           />
         </div>
-        <CategoriesTable
-          categories={categories}
-          toggleSubCategoryModal={toggleSubCategoryModal}
-          refetch={getCategories}
-          toggleCategoryModal={toggleCategoryModal}
-        />
+        {fetching ? (
+          <CircularProgress />
+        ) : (
+          <CategoriesTable
+            categories={categories}
+            toggleSubCategoryModal={toggleSubCategoryModal}
+            refetch={getCategories}
+            toggleCategoryModal={toggleCategoryModal}
+          />
+        )}
       </div>
     </div>
   );
