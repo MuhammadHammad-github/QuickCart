@@ -155,7 +155,7 @@ const AddProductModal = ({ open, setOpen, refetch, defaultState }) => {
   const [selectedColors, setSelectedColors] = useState([]);
   const [currentColor, setCurrentColor] = useState("");
   const { addProduct, fetching } = useAddProduct();
-  const { updateProduct } = useUpdateProduct(open?.id);
+  const { updateProduct, fetching: updating } = useUpdateProduct(open?.id);
   const { product } = useGetProduct(open?.id);
   const defaultFormData = {
     name: "",
@@ -404,6 +404,7 @@ const AddProductModal = ({ open, setOpen, refetch, defaultState }) => {
         />
         <div className="flex items-center gap-2">
           {selectedImages.map((image, index) => {
+            console.log(image);
             return (
               <CustomImageInput
                 imgSrc={image}
@@ -417,7 +418,7 @@ const AddProductModal = ({ open, setOpen, refetch, defaultState }) => {
         <MyButton
           text={open.type === "add" ? "Add" : "Edit"}
           type="submit"
-          loading={fetching}
+          loading={fetching || updating}
         />
       </form>
     </MyModal>
