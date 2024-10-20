@@ -2,9 +2,10 @@ import React from "react";
 import Hero from "../components/Hero";
 import useGetCategories from "../hooks/highLevelHooks/categories/useGetCategories";
 import { useNavigate } from "react-router-dom";
+import { CircularProgress } from "@mui/material";
 
 const Collections = () => {
-  const { categories } = useGetCategories();
+  const { categories, fetching } = useGetCategories();
   // const categories = [
   //   {
   //     name: "Electronics",
@@ -77,6 +78,8 @@ const Collections = () => {
     <div className="">
       <Hero heading={"Our Collections"} path={"Categories"} />
       <div className="respPx20 my-20">
+        {fetching && <CircularProgress />}
+        {categories?.length === 0 && <h3>No Categories Yet!</h3>}
         {categories?.map((category, index) => {
           return (
             <div key={index}>
@@ -85,6 +88,9 @@ const Collections = () => {
                 <p className="font-bold">({category.products.length} Items)</p>
               </div>
               <div className="resp3ColGrid gap-8 my-10">
+                {category.subCategories.length === 0 && (
+                  <p>No SubCategories!</p>
+                )}
                 {category.subCategories.map((subCategory, index) => {
                   return (
                     <SubCategoryCard

@@ -8,6 +8,7 @@ import NextArrow from "../../../components/NextArrow";
 import PrevArrow from "../../../components/PrevArrow";
 import useGetSlides from "../../../hooks/highLevelHooks/slides/useGetSlides";
 import { useNavigate } from "react-router-dom";
+import { Skeleton } from "@mui/material";
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -23,21 +24,10 @@ const Hero = () => {
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
   };
-  // const slides = [
-  //   {
-  //     heading: "Limited Offer Up to 50%",
-  //     description: "Discover the best products at unbeatable prices.",
-  //     image: "/purse_khaki.png",
-  //   },
-  //   {
-  //     heading: "Limited Offer Up to 50%",
-  //     description: "Discover the best products at unbeatable prices.",
-  //     image: "/shoes_white.png",
-  //   },
-  // ];
+
   return (
     <section className="overflow-x-hidden group">
-      {slides && (
+      {slides ? (
         <Slider {...settings}>
           {slides?.map((slide, index) => {
             return (
@@ -68,6 +58,13 @@ const Hero = () => {
             );
           })}
         </Slider>
+      ) : (
+        <Skeleton
+          variant="rectangular"
+          width={210}
+          height={60}
+          className="!w-full !h-[50vh]"
+        />
       )}
     </section>
   );

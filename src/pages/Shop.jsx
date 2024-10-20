@@ -19,6 +19,7 @@ import useGetProductsBySubCategory from "../hooks/highLevelHooks/products/useGet
 import MyInput from "../components/MyInput";
 import MyButton from "../components/MyButton";
 import { enqueueSnackbar } from "notistack";
+import { CircularProgress } from "@mui/material";
 
 const Shop = () => {
   const { category, subCategory } = useParams();
@@ -58,6 +59,7 @@ const Shop = () => {
             sortBy={sortBy}
             setSortBy={setSortBy}
           />
+
           <Products
             gridView={gridView}
             filters={filters}
@@ -123,14 +125,23 @@ const ViewAndSort = ({ gridView, setGridView, sortBy, setSortBy }) => {
   );
 };
 const Products = ({ gridView, filters, setColors, sortBy }) => {
-  console.log(sortBy);
   const [productsToShow, setProductsToShow] = useState([]);
-  const { products, getProducts } = useGetProducts(false);
+  const {
+    products,
+    getProducts,
+    fetching: fetchingProducts,
+  } = useGetProducts(false);
   const [backupProducts, setBackupProducts] = useState([]);
-  const { productsByCategory, getProductsByCategory } =
-    useGetProductsByCategory(filters.category);
-  const { productsBySubCategory, getProductsBySubCategory } =
-    useGetProductsBySubCategory(filters.subCategory);
+  const {
+    productsByCategory,
+    getProductsByCategory,
+    fetching: fetchingProductsByCategory,
+  } = useGetProductsByCategory(filters.category);
+  const {
+    productsBySubCategory,
+    getProductsBySubCategory,
+    fetching: fetchingProductsBySubCategory,
+  } = useGetProductsBySubCategory(filters.subCategory);
 
   useEffect(() => {
     const applyFilters = async () => {
@@ -217,14 +228,29 @@ const Products = ({ gridView, filters, setColors, sortBy }) => {
     );
     setColors(colors);
   }, [productsToShow]);
-  return (
-    <div className={`${(gridView && " resp3ColGrid") || "space-y-10"}  my-10`}>
-      {productsToShow?.map((product, index) => {
-        if (gridView) return <ProductCard product={product} key={index} />;
-        else return <ProductCardList product={product} key={index} />;
-      })}
-    </div>
-  );
+  if (
+    fetchingProducts ||
+    fetchingProductsByCategory ||
+    fetchingProductsBySubCategory
+  )
+    return <CircularProgress className="my-10" />;
+  if (
+    productsToShow?.length > 0 &&
+    !fetchingProducts &&
+    !fetchingProductsByCategory &&
+    !fetchingProductsBySubCategory
+  )
+    return (
+      <div
+        className={`${(gridView && " resp3ColGrid") || "space-y-10"}  my-10`}
+      >
+        {productsToShow?.map((product, index) => {
+          if (gridView) return <ProductCard product={product} key={index} />;
+          else return <ProductCardList product={product} key={index} />;
+        })}
+      </div>
+    );
+  else return <h2 className="my-10">No Products To Show...</h2>;
 };
 const SideBar = ({ colors, setFilters, filters, resetFilter }) => {
   const navigate = useNavigate();

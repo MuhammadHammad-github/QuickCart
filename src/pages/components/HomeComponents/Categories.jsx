@@ -8,12 +8,7 @@ import CategoryCard from "../../../components/CategoryCard";
 import useGetCategories from "../../../hooks/highLevelHooks/categories/useGetCategories";
 const Categories = () => {
   const { categories } = useGetCategories();
-  // const categories = [
-  //   { name: "Fashion", image: "/shoes.png" },
-  //   { name: "Fashion", image: "/shoes.png" },
-  //   { name: "Fashion", image: "/shoes.png" },
-  //   { name: "Fashion", image: "/shoes.png" },
-  // ];
+
   const settings = {
     dots: false,
     infinite: true,
@@ -49,22 +44,23 @@ const Categories = () => {
       },
     ],
   };
-  return (
-    <div className="my-20 group">
-      <Slider {...settings}>
-        {categories?.map((category, index) => {
-          return (
-            <CategoryCard
-              image={category.image}
-              key={index}
-              name={category.name}
-              id={category._id}
-            />
-          );
-        })}
-      </Slider>
-    </div>
-  );
+  if (categories?.length > 0)
+    return (
+      <div className="my-20 group">
+        <Slider {...settings}>
+          {categories?.map((category, index) => {
+            return (
+              <CategoryCard
+                image={category.image}
+                key={index}
+                name={category.name}
+                id={category._id}
+              />
+            );
+          })}
+        </Slider>
+      </div>
+    );
 };
 
 export default Categories;

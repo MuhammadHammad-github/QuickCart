@@ -4,22 +4,22 @@ import { useNavigate } from "react-router-dom";
 
 const SubCategories = () => {
   const { subCategories } = useGetSubCategories();
-
-  return (
-    <div className="grid 1150px:grid-cols-3 850px:grid-cols-2 grid-cols-1 gap-8 my-20">
-      {subCategories?.map((item, index) => {
-        return (
-          <SubCategoryCard
-            image={item.image}
-            name={item.name}
-            items={item.products.length}
-            id={item._id}
-            key={index}
-          />
-        );
-      })}
-    </div>
-  );
+  if (subCategories?.length > 0)
+    return (
+      <div className="grid 1150px:grid-cols-3 850px:grid-cols-2 grid-cols-1 gap-8 my-20">
+        {subCategories?.map((item, index) => {
+          return (
+            <SubCategoryCard
+              image={item.image}
+              name={item.name}
+              items={item.products.length}
+              id={item._id}
+              key={index}
+            />
+          );
+        })}
+      </div>
+    );
 };
 
 export default SubCategories;
