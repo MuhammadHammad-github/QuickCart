@@ -12,6 +12,7 @@ import useDeleteSubCategory from "../../hooks/highLevelHooks/subCategories/useDe
 import { useNavigate, useParams } from "react-router-dom";
 import useGetOneSubCategory from "../../hooks/highLevelHooks/subCategories/useGetOneSubCategory";
 import useUpdateSubCategory from "../../hooks/highLevelHooks/subCategories/useUpdateSubCategory";
+import { CircularProgress } from "@mui/material";
 
 const SubCategoriesAdmin = () => {
   const { category } = useParams();
@@ -19,7 +20,7 @@ const SubCategoriesAdmin = () => {
     show: false,
     type: "add",
   });
-  const { subCategories, getSubCategories } = useGetSubCategories();
+  const { subCategories, getSubCategories, fetching } = useGetSubCategories();
   const [filteredSubCategories, setFilteredSubCategories] = useState([]);
 
   const [openSubCategory, setOpenSubCategory] = useState(defaultStateSubCat);
@@ -56,13 +57,17 @@ const SubCategoriesAdmin = () => {
             onClick={() => toggleSubCategoryModal()}
           />
         </div>
-        <SubCategoriesTable
-          subCategories={
-            category === "null" ? subCategories : filteredSubCategories
-          }
-          getSubCategories={getSubCategories}
-          toggleSubCategoryModal={toggleSubCategoryModal}
-        />
+        {fetching ? (
+          <CircularProgress />
+        ) : (
+          <SubCategoriesTable
+            subCategories={
+              category === "null" ? subCategories : filteredSubCategories
+            }
+            getSubCategories={getSubCategories}
+            toggleSubCategoryModal={toggleSubCategoryModal}
+          />
+        )}
       </div>
     </div>
   );
@@ -81,7 +86,7 @@ const AddSubCategoryModal = ({
   const [name, setName] = useState("");
   const [parentCategory, setParentCategory] = useState("");
   const { updateSubCategory } = useUpdateSubCategory(openSubCategory?.id);
-  const { createSubCategory } = useCreateSubCategory();
+  const { createSubCategory, fetching } = useCreateSubCategory();
   const handleSubmitSubCategory = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -191,6 +196,7 @@ const AddSubCategoryModal = ({
         <MyButton
           text={openSubCategory.type === "add" ? "Add" : "Edit"}
           type="submit"
+          loading={fetching}
         />
       </form>
     </MyModal>
