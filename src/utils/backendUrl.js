@@ -1,2 +1,2 @@
-const backendUrl = "http://localhost:3000";
+const backendUrl = "https://quickcartbackend.glitch.me/";
 export default backendUrl;
