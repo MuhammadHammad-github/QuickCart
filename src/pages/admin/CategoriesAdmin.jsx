@@ -261,7 +261,7 @@ const CategoryRow = ({
   toggleSubCategoryModal,
   toggleCategoryModal,
 }) => {
-  const { deleteCategory } = useDeleteCategory(category._id);
+  const { deleteCategory, fetching } = useDeleteCategory(category._id);
   const navigate = useNavigate();
   return (
     <tr className={`${index % 2 === 0 && "bg-gray-100"}`}>
@@ -311,12 +311,13 @@ const CategoryRow = ({
         /
         <a
           onClick={async () => {
+            if (fetching) return;
             await deleteCategory();
             refetch();
           }}
           className="cursor-pointer text-primary"
         >
-          Delete
+          {fetching ? <CircularProgress /> : "Delete"}
         </a>
       </td>
     </tr>
