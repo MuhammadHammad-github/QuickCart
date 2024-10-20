@@ -108,7 +108,7 @@ const ProductRow = ({ product, index, refetch, toggleProductModal }) => {
         />
       </td>
       <td className="border px-4 py-2 ">{product.name}</td>
-      <td className="border px-4 py-2 ">{product.orders}</td>
+      <td className="border px-4 py-2 ">{product.orders?.length}</td>
       <td className="border px-4 py-2 ">{product.originalPrice}</td>
       <td className="border px-4 py-2 ">{product.salePrice}</td>
       <td className="border px-4 py-2 ">{product.category.name}</td>
