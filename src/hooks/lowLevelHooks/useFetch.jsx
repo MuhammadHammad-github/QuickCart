@@ -1,6 +1,7 @@
 import { enqueueSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import backendUrl from "../../utils/backendUrl";
+import { useNavigate } from "react-router-dom";
 
 const useFetch = (
   api,
@@ -14,6 +15,7 @@ const useFetch = (
   const [fetchedData, setFetchedData] = useState();
   const [body, setBody] = useState(initialBody);
   const [fetching, setFetching] = useState(false);
+  const navigate = useNavigate();
 
   const fetchData = async (newBody = body) => {
     try {
@@ -30,6 +32,12 @@ const useFetch = (
         }),
       });
       const json = await response.json();
+      if (json.action === "logout") {
+        localStorage.removeItem("authTokenAdmin");
+        localStorage.removeItem("authTokenSeller");
+        localStorage.removeItem("authTokenBuyer");
+        navigate("/loginPortals");
+      }
       setFetchedData({ ...json, success: response.ok });
       showAlert &&
         response.ok &&

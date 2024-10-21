@@ -205,7 +205,7 @@ const Header = () => {
                   >
                     {category.name}
                   </a>
-                  <div>
+                  <div className="flex flex-col gap-3">
                     {category.subCategories.map((subCategory, subIndex) => {
                       return (
                         <a

@@ -19,6 +19,7 @@ const useGetBuyer = () => {
     if (token) refetch();
   }, []);
   useEffect(() => {
+    console.log(fetchedData);
     if (!fetchedData) return;
     if (fetchedData?.action === "logout") {
       localStorage.removeItem("authTokenBuyer");
