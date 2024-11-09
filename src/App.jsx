@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Header from "./components/Header";
@@ -32,97 +32,78 @@ import Hero from "./pages/admin/Hero";
 import Checkout from "./pages/Checkout";
 import CheckoutSuccess from "./pages/CheckoutSuccess";
 import { CircularProgress } from "@mui/material";
+import MyLoader from "./components/MyLoader";
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  return (
+    <>
+      <Header />
+      <Routes>
+        {/* Buyer Routes */}
+        <Route exact path="/" element={<Home />} />
+        <Route exact path="/shop/:category/:subCategory" element={<Shop />} />
+        <Route exact path="/categories" element={<Collections />} />
+        <Route exact path="/wishlist" element={<Wishlist />} />
+        <Route exact path="/checkout" element={<Checkout />} />
+        <Route exact path="/checkoutSuccess" element={<CheckoutSuccess />} />
+        <Route exact path="/product/:id" element={<Product />} />
+        <Route exact path="/buyer/dashboard" element={<BuyerDashboard />} />
+        <Route
+          exact
+          path="/buyer/accountDetails"
+          element={<AccountDetails />}
+        />
+        <Route exact path="/buyer/orders" element={<BuyerOrders />} />
+        <Route exact path="/buyer/wishlist" element={<Wishlist />} />
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false); // Stop loading after 3 seconds (for demo purposes)
-    }, 3000); // Adjust the time as per your need
+        {/* Admin Routes */}
+        <Route exact path="/admin/dashboard" element={<Dashboard />} />
+        <Route exact path="/admin/hero" element={<Hero />} />
+        <Route exact path="/admin/buyerAccounts" element={<BuyerAccounts />} />
+        <Route exact path="/admin/categories" element={<CategoriesAdmin />} />
+        <Route
+          exact
+          path="/admin/subCategories/:category"
+          element={<SubCategoriesAdmin />}
+        />
+        <Route
+          exact
+          path="/admin/products/:category/:subCategory/:store"
+          element={<ProductsAdmin />}
+        />
+        <Route
+          exact
+          path="/admin/sellerAccounts"
+          element={<SellerAccounts />}
+        />
+        <Route
+          exact
+          path="/admin/pendingApprovals"
+          element={<PendingApprovals />}
+        />
 
-    return () => clearTimeout(timer); // Cleanup the timer on unmount
-  }, []);
-  if (isLoading)
-    return (
-      <div className="w-full h-screen flex items-center justify-center">
-        <CircularProgress />
-      </div>
-    );
-  else
-    return (
-      <>
-        <Header />
-        <Routes>
-          {/* Buyer Routes */}
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="/shop/:category/:subCategory" element={<Shop />} />
-          <Route exact path="/categories" element={<Collections />} />
-          <Route exact path="/wishlist" element={<Wishlist />} />
-          <Route exact path="/checkout" element={<Checkout />} />
-          <Route exact path="/checkoutSuccess" element={<CheckoutSuccess />} />
-          <Route exact path="/product/:id" element={<Product />} />
-          <Route exact path="/buyer/dashboard" element={<BuyerDashboard />} />
-          <Route
-            exact
-            path="/buyer/accountDetails"
-            element={<AccountDetails />}
-          />
-          <Route exact path="/buyer/orders" element={<BuyerOrders />} />
-          <Route exact path="/buyer/wishlist" element={<Wishlist />} />
+        {/* Seller Routes */}
+        <Route
+          exact
+          path="/retailer/dashboard"
+          element={<RetailerDashboard />}
+        />
+        <Route exact path="/retailer/orders" element={<RetailerOrders />} />
+        <Route exact path="/retailer/store" element={<RetailerStore />} />
 
-          {/* Admin Routes */}
-          <Route exact path="/admin/dashboard" element={<Dashboard />} />
-          <Route exact path="/admin/hero" element={<Hero />} />
-          <Route
-            exact
-            path="/admin/buyerAccounts"
-            element={<BuyerAccounts />}
-          />
-          <Route exact path="/admin/categories" element={<CategoriesAdmin />} />
-          <Route
-            exact
-            path="/admin/subCategories/:category"
-            element={<SubCategoriesAdmin />}
-          />
-          <Route
-            exact
-            path="/admin/products/:category/:subCategory/:store"
-            element={<ProductsAdmin />}
-          />
-          <Route
-            exact
-            path="/admin/sellerAccounts"
-            element={<SellerAccounts />}
-          />
-          <Route
-            exact
-            path="/admin/pendingApprovals"
-            element={<PendingApprovals />}
-          />
+        <Route exact path="/loginPortals" element={<LoginPortals />} />
+        <Route exact path="/loginBuyer" element={<Login />} />
+        <Route exact path="/loginAdmin" element={<LoginAdmin />} />
+        <Route exact path="/loginSeller" element={<LoginSeller />} />
 
-          {/* Seller Routes */}
-          <Route
-            exact
-            path="/retailer/dashboard"
-            element={<RetailerDashboard />}
-          />
-          <Route exact path="/retailer/orders" element={<RetailerOrders />} />
-          <Route exact path="/retailer/store" element={<RetailerStore />} />
-
-          <Route exact path="/loginPortals" element={<LoginPortals />} />
-          <Route exact path="/loginBuyer" element={<Login />} />
-          <Route exact path="/loginAdmin" element={<LoginAdmin />} />
-          <Route exact path="/loginSeller" element={<LoginSeller />} />
-
-          <Route exact path="/signupPortals" element={<SignupPortals />} />
-          <Route exact path="/signupBuyer" element={<Signup />} />
-          <Route exact path="/signupSeller" element={<SignupSeller />} />
-          <Route exact path="/signupAdmin" element={<SignupAdmin />} />
-        </Routes>
-        <Footer />
-      </>
-    );
+        <Route exact path="/signupPortals" element={<SignupPortals />} />
+        <Route exact path="/signupBuyer" element={<Signup />} />
+        <Route exact path="/signupSeller" element={<SignupSeller />} />
+        <Route exact path="/signupAdmin" element={<SignupAdmin />} />
+      </Routes>
+      <Footer />
+    </>
+  );
 }
 
 export default App;
