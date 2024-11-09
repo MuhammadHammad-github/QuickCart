@@ -14,10 +14,12 @@ import PrevArrow from "../components/PrevArrow";
 import useGetProduct from "../hooks/highLevelHooks/products/useGetProduct";
 import { useParams } from "react-router-dom";
 import useGetProductsBySubCategory from "../hooks/highLevelHooks/products/useGetProductsBySubCategory";
+import MyLoader from "../components/MyLoader";
 
 const Product = () => {
   const { id } = useParams();
-  const { product } = useGetProduct(id);
+  const { product, fetching } = useGetProduct(id);
+  if (fetching) return <MyLoader />;
   if (product)
     return (
       <div>
