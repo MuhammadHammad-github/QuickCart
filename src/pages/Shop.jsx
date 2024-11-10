@@ -20,25 +20,44 @@ import MyInput from "../components/MyInput";
 import MyButton from "../components/MyButton";
 import { enqueueSnackbar } from "notistack";
 import { CircularProgress } from "@mui/material";
+import useGetProductsBySearch from "../hooks/highLevelHooks/products/useGetProductsBySearch";
 
 const Shop = () => {
-  const { category, subCategory } = useParams();
+  const { category, subCategory, search } = useParams();
   const [colors, setColors] = useState([]);
   const [filters, setFilters] = useState({});
   const [gridView, setGridView] = useState(true);
   const [sortBy, setSortBy] = useState({ value: "default", text: "default" });
   useEffect(() => {
-    if (category === "null" && subCategory === "null") {
+    if (category === "null" && subCategory === "null" && search === "null") {
       setFilters((prev) => {
         return { ...prev, subCategory: null, category: null };
       });
       return;
     }
     if (category !== "null")
-      setFilters((prev) => ({ ...prev, category, subCategory: null }));
+      setFilters((prev) => ({
+        ...prev,
+        category,
+        subCategory: null,
+        search: null,
+      }));
     if (subCategory !== "null")
-      setFilters((prev) => ({ ...prev, subCategory, category: null }));
-  }, [category, subCategory]);
+      setFilters((prev) => ({
+        ...prev,
+        subCategory,
+        category: null,
+        search: null,
+      }));
+
+    if (search !== "null")
+      setFilters((prev) => ({
+        ...prev,
+        subCategory: null,
+        category: null,
+        search,
+      }));
+  }, [category, subCategory, search]);
   return (
     <div className="">
       <Hero heading={"Products"} path={"Products"} />
@@ -131,6 +150,11 @@ const Products = ({ gridView, filters, setColors, sortBy }) => {
     getProducts,
     fetching: fetchingProducts,
   } = useGetProducts(false);
+  const {
+    productsBySearch,
+    getProductsBySearch,
+    fetching: fetchingProductsBySearch,
+  } = useGetProductsBySearch(false, filters.search);
   const [backupProducts, setBackupProducts] = useState([]);
   const {
     productsByCategory,
@@ -145,34 +169,37 @@ const Products = ({ gridView, filters, setColors, sortBy }) => {
 
   useEffect(() => {
     const applyFilters = async () => {
-      const { category, subCategory, color } = filters;
-      if (!category && !subCategory) {
-        await getProducts();
-      }
-      if (category) {
-        await getProductsByCategory();
-      }
-      if (subCategory) {
-        await getProductsBySubCategory();
-      }
+      const { category, subCategory, color, search } = filters;
+      if (!category && !subCategory && !search) await getProducts();
+      if (category) await getProductsByCategory();
+      if (subCategory) await getProductsBySubCategory();
+      if (search) await getProductsBySearch();
     };
     applyFilters();
   }, [filters]);
   useEffect(() => {
-    const { category, subCategory, color, price } = filters;
-
-    if (products && !category && !subCategory) {
+    const { category, subCategory, color, price, search } = filters;
+    console.log(search);
+    if (products && !category && !subCategory && !search) {
       setProductsToShow(products);
       setBackupProducts(products);
     }
 
-    if (productsByCategory && category && !subCategory) {
+    if (productsByCategory && category && !subCategory && !search) {
       setProductsToShow(productsByCategory);
       setBackupProducts(productsByCategory);
     }
-    if (productsBySubCategory && !category && subCategory) {
+    if (productsBySubCategory && !category && subCategory && !search) {
       setProductsToShow(productsBySubCategory);
       setBackupProducts(productsBySubCategory);
+    }
+    if (productsBySubCategory && !category && subCategory && !search) {
+      setProductsToShow(productsBySubCategory);
+      setBackupProducts(productsBySubCategory);
+    }
+    if (productsBySearch && !category && !subCategory && search) {
+      setProductsToShow(productsBySearch);
+      setBackupProducts(productsBySearch);
     }
     if (color) {
       setProductsToShow((prev) => {
@@ -200,7 +227,7 @@ const Products = ({ gridView, filters, setColors, sortBy }) => {
         return filtered;
       });
     }
-  }, [products, productsByCategory, productsBySubCategory]);
+  }, [products, productsByCategory, productsBySubCategory, productsBySearch]);
   useEffect(() => {
     if (sortBy.value === "default") setProductsToShow(backupProducts);
     else if (sortBy.value === "lth") {
@@ -281,7 +308,7 @@ const SideBar = ({ colors, setFilters, filters, resetFilter }) => {
             <SidebarLink
               key={index}
               className={"group relative "}
-              onClick={() => navigate(`/shop/${item._id}/null`)}
+              onClick={() => navigate(`/shop/${item._id}/null/null`)}
               text={`${item.name} (${item.products.length})`}
             >
               <ChevronRight className="!text-lg" />
@@ -291,7 +318,9 @@ const SideBar = ({ colors, setFilters, filters, resetFilter }) => {
                     return (
                       <SidebarLink
                         key={index}
-                        onClick={() => navigate(`/shop/null/${subItem._id}`)}
+                        onClick={() =>
+                          navigate(`/shop/null/${subItem._id}/null`)
+                        }
                         text={`${subItem.name} (${subItem.products.length})`}
                       />
                     );

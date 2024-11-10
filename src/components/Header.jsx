@@ -10,7 +10,7 @@ import {
   SearchOutlined,
   ShoppingCartOutlined,
 } from "@mui/icons-material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import MyInput from "./MyInput";
 import { useNavigate } from "react-router-dom";
 import useGetCategories from "../hooks/highLevelHooks/categories/useGetCategories";
@@ -23,6 +23,11 @@ const Header = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
+  const [searchVal, setSearchVal] = useState("");
+  const searchRef = useRef("");
+  const search = () => {
+    navigate(`/shop/null/null/${searchVal || "null"}`);
+  };
   const toggleSearch = () => {
     setSearchOpen((prev) => !prev);
     setAccountOpen(false);
@@ -68,7 +73,9 @@ const Header = () => {
             >
               <MyInput
                 placeholder="Search Here..."
-                icon={<SearchOutlined className="inputIcon" />}
+                onChange={(e) => setSearchVal(e.target.value)}
+                ref={searchRef}
+                icon={<SearchOutlined className="inputIcon" onClick={search} />}
               />
             </div>
           </div>
@@ -172,7 +179,7 @@ const Header = () => {
         </div>
         <div>
           <a
-            onClick={() => navigate("/shop/null/null")}
+            onClick={() => navigate("/shop/null/null/null")}
             href="#"
             className="min-w-max hover:text-primary transitional text-base"
           >
@@ -201,7 +208,7 @@ const Header = () => {
                 <div key={index} className="flex flex-col border-b-2 pb-4">
                   <a
                     className="my-4 font-bold min-w-max hover:text-primary transitional  cursor-pointer text-lg border-b py-2"
-                    onClick={() => navigate(`/shop/${category._id}/null`)}
+                    onClick={() => navigate(`/shop/${category._id}/null/null`)}
                   >
                     {category.name}
                   </a>
@@ -211,7 +218,7 @@ const Header = () => {
                         <a
                           key={subIndex}
                           onClick={() =>
-                            navigate(`/shop/null/${subCategory._id}`)
+                            navigate(`/shop/null/${subCategory._id}/null`)
                           }
                           href="#"
                           className="min-w-max hover:text-primary transitional text-base"

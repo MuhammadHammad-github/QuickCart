@@ -246,7 +246,7 @@ const Tabs = ({ currentTab, setCurrentTab }) => {
           Details
         </h6>
       </div>{" "}
-      <div
+      {/* <div
         className={`relative cursor-pointer`}
         onClick={() => setCurrentTab(1)}
       >
@@ -258,7 +258,7 @@ const Tabs = ({ currentTab, setCurrentTab }) => {
         >
           Reviews
         </h6>
-      </div>
+      </div> */}
     </div>
   );
 };
@@ -266,6 +266,8 @@ const RelatedProducts = ({ product }) => {
   const { productsBySubCategory: products } = useGetProductsBySubCategory(
     product?.subCategory
   );
+  console.log(products);
+
   const settings = {
     dots: false,
     infinite: products?.length > 1,

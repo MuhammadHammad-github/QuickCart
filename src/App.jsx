@@ -41,7 +41,11 @@ function App() {
       <Routes>
         {/* Buyer Routes */}
         <Route exact path="/" element={<Home />} />
-        <Route exact path="/shop/:category/:subCategory" element={<Shop />} />
+        <Route
+          exact
+          path="/shop/:category/:subCategory/:search"
+          element={<Shop />}
+        />
         <Route exact path="/categories" element={<Collections />} />
         <Route exact path="/wishlist" element={<Wishlist />} />
         <Route exact path="/checkout" element={<Checkout />} />
