@@ -18,6 +18,8 @@ const useGetProductsBySearch = (autoCall = true, search) => {
     if (!items) return [];
     console.log("after check");
     return items.filter((item) => {
+      console.log(search);
+      console.log(item);
       const { category, subCategory, name, description, details } = item;
       return (
         category.name.toLowerCase().includes(search.toLowerCase()) ||

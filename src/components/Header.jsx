@@ -12,21 +12,28 @@ import {
 } from "@mui/icons-material";
 import React, { useEffect, useRef, useState } from "react";
 import MyInput from "./MyInput";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useGetCategories from "../hooks/highLevelHooks/categories/useGetCategories";
 import useGetProduct from "../hooks/highLevelHooks/products/useGetProduct";
 import MyButton from "./MyButton";
 
 const Header = () => {
   const navigate = useNavigate();
+  const { search: searchParam } = useParams();
   const { categories } = useGetCategories();
   const [searchOpen, setSearchOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const [searchVal, setSearchVal] = useState("");
   const searchRef = useRef("");
+  useEffect(() => {
+    if (!searchParam || searchParam === "null") return;
+    setSearchVal(searchParam);
+  }, [searchParam]);
   const search = () => {
-    navigate(`/shop/null/null/${searchVal || "null"}`);
+    console.log(searchVal === "");
+    if (!searchVal || searchVal === "") navigate(`/shop/null/null/null`);
+    else navigate(`/shop/null/null/${searchVal}`);
   };
   const toggleSearch = () => {
     setSearchOpen((prev) => !prev);

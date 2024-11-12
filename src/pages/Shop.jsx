@@ -258,14 +258,16 @@ const Products = ({ gridView, filters, setColors, sortBy }) => {
   if (
     fetchingProducts ||
     fetchingProductsByCategory ||
-    fetchingProductsBySubCategory
+    fetchingProductsBySubCategory ||
+    fetchingProductsBySearch
   )
     return <CircularProgress className="my-10" />;
   if (
     productsToShow?.length > 0 &&
     !fetchingProducts &&
     !fetchingProductsByCategory &&
-    !fetchingProductsBySubCategory
+    !fetchingProductsBySubCategory &&
+    !fetchingProductsBySearch
   )
     return (
       <div
