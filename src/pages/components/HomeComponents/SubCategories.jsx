@@ -26,7 +26,7 @@ export default SubCategories;
 const SubCategoryCard = ({ image, name, items, id }) => {
   const navigate = useNavigate();
   const onClick = () => {
-    navigate(`/shop/null/${id}`);
+    navigate(`/shop/null/${id}/null`);
   };
   return (
     <div

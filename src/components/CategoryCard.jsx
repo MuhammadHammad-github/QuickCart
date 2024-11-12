@@ -6,7 +6,7 @@ const CategoryCard = ({ image, name, id }) => {
   return (
     <div
       onClick={() => {
-        navigate(`/shop/${id}/null`);
+        navigate(`/shop/${id}/null/null`);
       }}
       className="flex flex-col categoryCard cursor-pointer mx-2"
     >
