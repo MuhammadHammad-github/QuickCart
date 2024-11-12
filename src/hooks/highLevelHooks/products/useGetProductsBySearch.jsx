@@ -10,9 +10,8 @@ const useGetProductsBySearch = (autoCall = true, search) => {
     false,
     autoCall
   );
-  console.log(fetchedData);
   const filteredItems = useMemo(() => {
-    if (!fetchedData) return [];
+    if (!fetchedData || !search) return [];
 
     const { items } = fetchedData;
     if (!items) return [];

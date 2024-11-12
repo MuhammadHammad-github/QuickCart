@@ -31,7 +31,7 @@ const Shop = () => {
   useEffect(() => {
     if (category === "null" && subCategory === "null" && search === "null") {
       setFilters((prev) => {
-        return { ...prev, subCategory: null, category: null };
+        return { ...prev, subCategory: null, category: null, search: null };
       });
       return;
     }
@@ -173,6 +173,7 @@ const Products = ({ gridView, filters, setColors, sortBy }) => {
       if (!category && !subCategory && !search) await getProducts();
       if (category) await getProductsByCategory();
       if (subCategory) await getProductsBySubCategory();
+      console.log(search);
       if (search) await getProductsBySearch();
     };
     applyFilters();
