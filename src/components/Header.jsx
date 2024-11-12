@@ -31,7 +31,6 @@ const Header = () => {
     setSearchVal(searchParam);
   }, [searchParam]);
   const search = () => {
-    console.log(searchVal === "");
     if (!searchVal || searchVal === "") navigate(`/shop/null/null/null`);
     else navigate(`/shop/null/null/${searchVal}`);
   };
@@ -81,6 +80,9 @@ const Header = () => {
               <MyInput
                 placeholder="Search Here..."
                 onChange={(e) => setSearchVal(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") search();
+                }}
                 ref={searchRef}
                 icon={<SearchOutlined className="inputIcon" onClick={search} />}
               />
