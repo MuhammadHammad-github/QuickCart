@@ -25,7 +25,7 @@ const Product = () => {
       <div>
         <ImageAndInfo product={product} />
         <DetailsAndReviews product={product} />
-        <RelatedProducts product={product} />
+        {/* <RelatedProducts product={product} /> */}
       </div>
     );
 };

@@ -6,7 +6,7 @@ const SubCategories = () => {
   const { subCategories } = useGetSubCategories();
   if (subCategories?.length > 0)
     return (
-      <div className="grid 1150px:grid-cols-3 850px:grid-cols-2 grid-cols-1 gap-8 my-20">
+      <div className="grid 2xl:grid-cols-4 1150px:grid-cols-3 850px:grid-cols-2 grid-cols-1 gap-8 my-20">
         {subCategories?.map((item, index) => {
           return (
             <SubCategoryCard
