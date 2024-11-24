@@ -42,9 +42,10 @@ const ImageAndInfo = ({ product }) => {
     const { left, top, width, height } = e.target.getBoundingClientRect();
     const x = ((e.pageX - left) / width) * 100;
     const y = ((e.pageY - top) / height) * 100;
+    const bgImage = `url("${currentImage}")`;
     setZoomStyle({
-      backgroundImage: `url(${currentImage})`,
       backgroundPosition: `${x}% ${y}%`,
+      backgroundImage: bgImage,
     });
   };
   const handleMouseLeave = () => {
@@ -266,7 +267,6 @@ const RelatedProducts = ({ product }) => {
   const { productsBySubCategory: products } = useGetProductsBySubCategory(
     product?.subCategory
   );
-  console.log(products);
 
   const settings = {
     dots: false,
