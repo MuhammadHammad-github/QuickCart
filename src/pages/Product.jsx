@@ -113,7 +113,7 @@ const ImageAndInfo = ({ product }) => {
                 <img
                   src={image}
                   alt="productImage"
-                  className="max-w-full  size-32"
+                  className="max-w-full object-cover  size-32"
                 />
               </div>
             );
