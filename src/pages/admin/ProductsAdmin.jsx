@@ -152,6 +152,7 @@ const ProductRow = ({ product, index, refetch }) => {
     <tr className={`${index % 2 === 0 && "bg-gray-100"}`} key={index}>
       <td className="border px-4 py-2">
         <img
+          loading="lazy"
           src={product.images[0]}
           alt="productImage"
           className="max-w-full object-contain size-12"

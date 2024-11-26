@@ -12,6 +12,7 @@ const CategoryCard = ({ image, name, id }) => {
     >
       <div className="rounded-lg overflow-hidden bg-gradient-to-b from-neutral2-800 to-neutral1 ">
         <img
+          loading="lazy"
           src={image}
           alt="categoryImage"
           className="max-w-full mx-auto h-64 object-cover"

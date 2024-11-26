@@ -9,7 +9,6 @@ const useGetPopularProducts = () => {
     {},
     false
   );
-  console.log(fetchedData);
   return {
     products: fetchedData?.items,
     fetching,

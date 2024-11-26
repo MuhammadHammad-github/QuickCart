@@ -237,6 +237,7 @@ const SubCategoryRow = ({
     <tr className={`${index % 2 === 0 && "bg-gray-100"}`}>
       <td className="border px-4 py-2">
         <img
+          loading="lazy"
           src={subCategory.image}
           alt="categoryImage"
           className="max-w-full object-contain size-12"

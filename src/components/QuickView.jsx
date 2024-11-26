@@ -25,6 +25,7 @@ const QuickView = ({ open, setOpen, product = {} }) => {
       <div className="grid grid-cols-6 gap-8">
         <div className="bg-neutral2-800 rounded-lg 1000px:col-span-3 col-span-6">
           <img
+            loading="lazy"
             src={product?.images[0]}
             alt="productImage"
             className="max-w-full h-[26rem] object-contain mx-auto"

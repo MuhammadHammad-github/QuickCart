@@ -114,6 +114,7 @@ const SlideForm = ({ num, slide, getSlides, slidesLength }) => {
           <div className="flex items-center w-full">
             <p>Previous Image:</p>
             <img
+              loading="lazy"
               src={slide.image}
               alt="slideImage"
               className="object-contain size-20 "

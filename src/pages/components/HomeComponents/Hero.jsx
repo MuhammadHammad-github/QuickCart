@@ -37,6 +37,7 @@ const Hero = () => {
               >
                 <div className=" md:block hidden">
                   <img
+                    loading="lazy"
                     src={slide.image}
                     alt="slide image"
                     className="max-w-full mx-auto  h-[26rem] object-contain"

@@ -123,6 +123,7 @@ const SubCategoryCard = ({ image, name, items, id }) => {
     >
       <div className="bg-gradient-to-t from-neutral2-800 to-neutral1">
         <img
+          loading="lazy"
           src={image}
           alt="subCategoryImage"
           className="max-w-full object-cover h-80 mx-auto"

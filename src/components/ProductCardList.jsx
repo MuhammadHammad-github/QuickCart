@@ -89,11 +89,13 @@ const ProductCardList = ({ product }) => {
           </div>
         )}
         <img
+          loading="lazy"
           src={images[0]}
           alt="productImage"
           className="mx-auto object-cover max-w-full h-60 productImage1 transitional"
         />
         <img
+          loading="lazy"
           src={images[1] || images[0]}
           alt="productImage"
           className="object-contain max-w-full h-full w-full absolute top-0 left-0 productImage2 transitional"

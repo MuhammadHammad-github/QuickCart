@@ -15,10 +15,7 @@ const useGetProductsBySearch = (autoCall = true, search) => {
 
     const { items } = fetchedData;
     if (!items) return [];
-    console.log("after check");
     return items.filter((item) => {
-      console.log(search);
-      console.log(item);
       const { category, subCategory, name, description, details } = item;
       return (
         category.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -29,7 +26,6 @@ const useGetProductsBySearch = (autoCall = true, search) => {
       );
     });
   }, [fetchedData, search]);
-  console.log(filteredItems);
   return {
     productsBySearch: filteredItems,
     fetching,

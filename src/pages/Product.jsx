@@ -95,6 +95,7 @@ const ImageAndInfo = ({ product }) => {
           style={zoomStyle}
         >
           <img
+            loading="lazy"
             src={currentImage}
             alt="Product"
             className=" max-w-full mx-auto h-[30rem] object-contain transition-opacity duration-300 ease-in-out group-hover:opacity-0 group-hover:transition-opacity "
@@ -111,6 +112,7 @@ const ImageAndInfo = ({ product }) => {
                 }`}
               >
                 <img
+                  loading="lazy"
                   src={image}
                   alt="productImage"
                   className="max-w-full object-cover  size-32"

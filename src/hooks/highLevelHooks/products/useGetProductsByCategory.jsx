@@ -12,7 +12,6 @@ const useGetProductsByCategory = (id) => {
   );
   useEffect(() => {
     if (!id || id === "null") return;
-    console.log("hey", id);
     refetch();
   }, [id]);
   return {

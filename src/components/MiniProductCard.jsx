@@ -7,6 +7,7 @@ const MiniProductCard = ({ image, name, originalPrice, salePrice, id }) => {
     <div className="rounded-lg border p-5 flex  gap-5">
       <div className="bg-neutral2-800 rounded-lg min-w-max overflow-hidden">
         <img
+          loading="lazy"
           src={image}
           alt="productImage"
           className="max-w-full w-20  h-20 object-cover"

@@ -10,8 +10,6 @@ const useGetProductsBySubCategory = (id) => {
     false,
     false
   );
-  console.log(id);
-  console.log(fetchedData);
   useEffect(() => {
     if (!id || id === "null") return;
     refetch();

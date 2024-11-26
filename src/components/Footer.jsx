@@ -86,6 +86,7 @@ const Footer = () => {
             <p className="font-[500]">Guaranteed Safe Checkout</p>
             <div>
               <img
+                loading="lazy"
                 src="/visa.png"
                 className="max-w-full object-contain h-5"
                 alt=""

@@ -347,6 +347,7 @@ const CartItem = ({ item = {}, removeItem, index }) => {
       </div>
       <div className="bg-neutral2-800 rounded-lg min-w-max overflow-hidden flex items-center justify-center">
         <img
+          loading="lazy"
           src={product?.images[0]}
           alt="productImage"
           className="max-w-full w-20  h-20 object-cover"
