@@ -7,8 +7,9 @@ import MyButton from "../../../components/MyButton";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import useGetFeaturedProducts from "../../../hooks/highLevelHooks/products/useGetFeaturedProducts";
+import SkeletonProductCard from "../../../components/SkeletonProductCard";
 const FeaturedAndSale = () => {
-  const { featuredProducts } = useGetFeaturedProducts();
+  const { featuredProducts, fetching } = useGetFeaturedProducts();
   const specifySlides = (number) => {
     return featuredProducts?.length >= number
       ? number
@@ -49,17 +50,20 @@ const FeaturedAndSale = () => {
       },
     ],
   };
-  if (featuredProducts?.length > 0)
-    return (
-      <div className="my-20">
-        <div className="flex items-center justify-center">
-          <h3>Featured Products</h3>
-        </div>
-        <div className="my-10 group">
-          <ProductsSlider settings={settings} products={featuredProducts} />
-        </div>
+  return (
+    <div className="my-20">
+      <div className="flex items-center justify-center">
+        <h3>Featured Products</h3>
       </div>
-    );
+      <div className="my-10 group">
+        <ProductsSlider
+          settings={settings}
+          products={featuredProducts}
+          fetching={fetching}
+        />
+      </div>
+    </div>
+  );
 };
 
 export default FeaturedAndSale;
@@ -85,12 +89,16 @@ const Tabs = ({ showFeatured, setShowFeatured }) => {
     </div>
   );
 };
-const ProductsSlider = ({ settings, products = [] }) => {
+const ProductsSlider = ({ settings, products = [], fetching }) => {
   return (
     <Slider {...settings}>
-      {products.map((product, index) => {
-        return <ProductCard product={product} key={index} />;
-      })}
+      {fetching && <SkeletonProductCard />}
+      {fetching && <SkeletonProductCard />}
+      {fetching && <SkeletonProductCard />}
+      {!fetching &&
+        products?.map((product, index) => {
+          return <ProductCard product={product} key={index} />;
+        })}
     </Slider>
   );
 };

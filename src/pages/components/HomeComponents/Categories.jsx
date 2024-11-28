@@ -6,8 +6,9 @@ import NextArrow from "../../../components/NextArrow";
 import PrevArrow from "../../../components/PrevArrow";
 import CategoryCard from "../../../components/CategoryCard";
 import useGetCategories from "../../../hooks/highLevelHooks/categories/useGetCategories";
+import { Skeleton } from "@mui/material";
 const Categories = () => {
-  const { categories } = useGetCategories();
+  const { categories, fetching } = useGetCategories();
 
   const settings = {
     dots: false,
@@ -44,23 +45,35 @@ const Categories = () => {
       },
     ],
   };
-  if (categories?.length > 0)
-    return (
-      <div className="my-20 group">
-        <Slider {...settings}>
-          {categories?.map((category, index) => {
-            return (
-              <CategoryCard
-                image={category.image}
-                key={index}
-                name={category.name}
-                id={category._id}
-              />
-            );
-          })}
-        </Slider>
-      </div>
-    );
+  return (
+    <div className="my-20 group">
+      <Slider {...settings}>
+        {fetching && <SkeletonCategoryCard />}
+        {fetching && <SkeletonCategoryCard />}
+        {fetching && <SkeletonCategoryCard />}
+        {categories?.map((category, index) => {
+          return (
+            <CategoryCard
+              image={category.image}
+              key={index}
+              name={category.name}
+              id={category._id}
+            />
+          );
+        })}
+      </Slider>
+    </div>
+  );
 };
 
 export default Categories;
+const SkeletonCategoryCard = () => {
+  return (
+    <div>
+      <Skeleton variant="rectangular" className="w-full h-full" height={256} />
+      <div className="flex flex-col items-center justify-center p-5 gap-2">
+        <Skeleton variant="text" sx={{ fontSize: "0.9rem", width: "8rem" }} />
+      </div>
+    </div>
+  );
+};
