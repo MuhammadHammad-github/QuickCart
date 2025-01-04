@@ -16,6 +16,11 @@
   -moz-osx-font-smoothing: grayscale;
   @apply !text-secondary;
 }
+body {
+  max-width: 1500px !important;
+  margin: 0 auto !important;
+}
+
 h1,
 h2,
 h3,

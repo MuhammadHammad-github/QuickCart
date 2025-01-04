@@ -35,7 +35,7 @@ const Hero = () => {
                 key={index}
                 className="!grid md:grid-cols-2 grid-cols-1 min-h-[50vh] bg-gradient-to-r from-neutral1-100  to-neutral1 p-10"
               >
-                <div className=" md:block hidden">
+                <div className=" md:flex items-center hidden">
                   <img
                     loading="lazy"
                     src={slide.image}

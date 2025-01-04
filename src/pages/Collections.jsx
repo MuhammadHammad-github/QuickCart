@@ -117,7 +117,7 @@ const SubCategoryCard = ({ image, name, items, id }) => {
   return (
     <div
       onClick={() => {
-        navigate(`/shop/null/${id}`);
+        navigate(`/shop/null/${id}/null`);
       }}
       className="rounded-xl overflow-hidden group cursor-pointer"
     >
