@@ -180,7 +180,6 @@ const Products = ({ gridView, filters, setColors, sortBy }) => {
   }, [filters]);
   useEffect(() => {
     const { category, subCategory, color, price, search } = filters;
-    console.log(search);
     if (products && !category && !subCategory && !search) {
       setProductsToShow(products);
       setBackupProducts(products);
@@ -228,7 +227,13 @@ const Products = ({ gridView, filters, setColors, sortBy }) => {
         return filtered;
       });
     }
-  }, [products, productsByCategory, productsBySubCategory, productsBySearch]);
+  }, [
+    products,
+    productsByCategory,
+    productsBySubCategory,
+    productsBySearch,
+    filters,
+  ]);
   useEffect(() => {
     if (sortBy.value === "default") setProductsToShow(backupProducts);
     else if (sortBy.value === "lth") {

@@ -1,19 +1,33 @@
 import { useEffect } from "react";
 import useFetch from "../../lowLevelHooks/useFetch";
+import { useFetchQuery } from "../../lowLevelHooks/useFetchQueries";
 
+// const useGetRetailerProducts = (id) => {
+//   const { fetchedData, fetching, refetch } = useFetch(
+//     `api/product/retailerProducts`,
+//     "GET",
+//     { id },
+//     {},
+//     false,
+//     false
+//   );
+//   useEffect(() => {
+//     if (!id || id === "null") return;
+//     refetch();
+//   }, [id]);
+//   return {
+//     retailerProducts: fetchedData?.items,
+//     fetching,
+//     getProducts: refetch,
+//   };
+// };
 const useGetRetailerProducts = (id) => {
-  const { fetchedData, fetching, refetch } = useFetch(
+  const { fetchedData, fetching, refetch } = useFetchQuery(
     `api/product/retailerProducts`,
-    "GET",
+    ["products", { retailer: id }],
     { id },
-    {},
-    false,
-    false
+    !!id && id !== "null"
   );
-  useEffect(() => {
-    if (!id || id === "null") return;
-    refetch();
-  }, [id]);
   return {
     retailerProducts: fetchedData?.items,
     fetching,

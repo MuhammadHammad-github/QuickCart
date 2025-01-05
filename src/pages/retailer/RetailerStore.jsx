@@ -93,7 +93,7 @@ const RetailerStore = () => {
 export default RetailerStore;
 
 const ProductRow = ({ product, index, refetch, toggleProductModal }) => {
-  const { deleteProduct } = useDeleteProduct(
+  const { deleteProduct, fetching } = useDeleteProduct(
     product._id,
     product.category._id,
     product.subCategory._id
@@ -133,20 +133,33 @@ const ProductRow = ({ product, index, refetch, toggleProductModal }) => {
           Edit
         </a>
         /
-        <a
-          onClick={async () => {
-            await deleteProduct();
-            refetch();
-          }}
-          className="cursor-pointer text-primary"
-        >
-          Delete
-        </a>
+        {fetching ? (
+          <a className=" text-gray-500"> Deleting </a>
+        ) : (
+          <a
+            onClick={async () => {
+              await deleteProduct();
+              refetch();
+            }}
+            className="cursor-pointer text-primary"
+          >
+            Delete
+          </a>
+        )}
       </td>
     </tr>
   );
 };
-
+const defaultFormData = {
+  name: "",
+  category: "",
+  subCategory: "",
+  originalPrice: 0,
+  salePrice: 0,
+  stock: 0,
+  description: "",
+  details: "",
+};
 const AddProductModal = ({ open, setOpen, refetch, defaultState }) => {
   const { categories } = useGetCategories();
   const [selectedImages, setSelectedImages] = useState([]);
@@ -157,16 +170,8 @@ const AddProductModal = ({ open, setOpen, refetch, defaultState }) => {
   const { addProduct, fetching } = useAddProduct();
   const { updateProduct, fetching: updating } = useUpdateProduct(open?.id);
   const { product } = useGetProduct(open?.id);
-  const defaultFormData = {
-    name: "",
-    category: "",
-    subCategory: "",
-    originalPrice: 0,
-    salePrice: 0,
-    stock: 0,
-    description: "",
-    details: "",
-  };
+  // console.table(open);
+
   const [customFormData, setCustomFormData] = useState(defaultFormData);
   const handleSubmitProduct = async (e) => {
     e.preventDefault();
@@ -230,7 +235,7 @@ const AddProductModal = ({ open, setOpen, refetch, defaultState }) => {
     setSelectedCategory(categories[0]._id);
   }, [categories]);
   useEffect(() => {
-    if (!product) return;
+    if (!product || open.type === "add") return;
     const {
       name,
       category,
@@ -243,7 +248,6 @@ const AddProductModal = ({ open, setOpen, refetch, defaultState }) => {
       colors,
       images,
     } = product;
-    console.log(category);
     setSelectedImages(images);
     setSelectedCategory(category);
     setSelectedColors(colors);
@@ -257,8 +261,7 @@ const AddProductModal = ({ open, setOpen, refetch, defaultState }) => {
       description,
       details,
     });
-  }, [product]);
-  console.log(selectedCategory);
+  }, [product, open]);
   return (
     <MyModal
       openType2={open}

@@ -31,9 +31,7 @@ const useFetch = (
           body: newBody instanceof FormData ? newBody : JSON.stringify(newBody),
         }),
       });
-      console.log(response);
       const json = await response.json();
-      console.log(json);
       if (json.action === "logout") {
         localStorage.removeItem("authTokenAdmin");
         localStorage.removeItem("authTokenSeller");
