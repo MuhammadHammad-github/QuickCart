@@ -163,6 +163,7 @@ const defaultFormData = {
 const AddProductModal = ({ open, setOpen, refetch, defaultState }) => {
   const { categories } = useGetCategories();
   const [selectedImages, setSelectedImages] = useState([]);
+  const [imagesToDelete, setImagesToDelete] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState();
   const { subCategories } = useGetSubCategoriesByCategory(selectedCategory);
   const [selectedColors, setSelectedColors] = useState([]);
@@ -171,7 +172,7 @@ const AddProductModal = ({ open, setOpen, refetch, defaultState }) => {
   const { updateProduct, fetching: updating } = useUpdateProduct(open?.id);
   const { product } = useGetProduct(open?.id);
   // console.table(open);
-
+  console.log(selectedImages);
   const [customFormData, setCustomFormData] = useState(defaultFormData);
   const handleSubmitProduct = async (e) => {
     e.preventDefault();
@@ -184,19 +185,24 @@ const AddProductModal = ({ open, setOpen, refetch, defaultState }) => {
         variant: "error",
       });
     const fileName = "productImage";
+    imagesToDelete.forEach((file) => {
+      formData.append("imagesToDelete", file.url);
+    });
     selectedImages.forEach((file) => {
       if (file.isFetched) {
-        let extension = "";
-        if (file.type === "image/png") {
-          extension = ".png";
-        } else if (file.type === "image/jpeg") {
-          extension = ".jpg";
-        } else {
-          const fileTypeParts = file.type.split("/");
-          extension = `.${fileTypeParts[1]}`;
-        }
-        const completeFileName = `${fileName}${extension}`;
-        formData.append("images", file, completeFileName);
+        // let extension = "";
+        // if (file.type === "image/png") {
+        //   extension = ".png";
+        // } else if (file.type === "image/jpeg") {
+        //   extension = ".jpg";
+        // } else if (file.type === "image/webp") {
+        //   extension = ".webp";
+        // } else {
+        //   const fileTypeParts = file.type.split("/");
+        //   extension = `.${fileTypeParts[1]}`;
+        // }
+        // const completeFileName = `${fileName}${extension}`;
+        // formData.append("images", file, completeFileName);
       } else formData.append("images", file);
     });
     if (open.type === "add") {
@@ -414,6 +420,7 @@ const AddProductModal = ({ open, setOpen, refetch, defaultState }) => {
                 setSelectedImages={setSelectedImages}
                 key={index}
                 index={index}
+                setImagesToDelete={setImagesToDelete}
               />
             );
           })}
@@ -427,7 +434,12 @@ const AddProductModal = ({ open, setOpen, refetch, defaultState }) => {
     </MyModal>
   );
 };
-const CustomImageInput = ({ setSelectedImages, imgSrc, index }) => {
+const CustomImageInput = ({
+  setSelectedImages,
+  imgSrc,
+  index,
+  setImagesToDelete,
+}) => {
   const fileInputRef = useRef(null);
   const [imagePreview, setImagePreview] = useState("");
   const handleImageClick = () => {
@@ -438,6 +450,11 @@ const CustomImageInput = ({ setSelectedImages, imgSrc, index }) => {
     const newFiles = Array.from(event.target.files);
     setSelectedImages((prevFiles) => {
       const updatedFiles = [...prevFiles];
+      const removedImage = updatedFiles[index];
+      if (removedImage && removedImage.isFetched === true) {
+        setImagesToDelete((prevImages) => [...prevImages, removedImage]);
+      }
+
       updatedFiles[index] = newFiles[0];
       return updatedFiles;
     });
@@ -470,6 +487,11 @@ const CustomImageInput = ({ setSelectedImages, imgSrc, index }) => {
         onClick={() => {
           setSelectedImages((prev) => {
             const updated = [...prev];
+            const removedImage = updated[index];
+            if (removedImage && removedImage.isFetched === true) {
+              setImagesToDelete((prevImages) => [...prevImages, removedImage]);
+            }
+
             updated.splice(index, 1);
             return updated;
           });
@@ -521,5 +543,6 @@ const urlToFile = async (url, filename) => {
 
   const file = new File([blob], filename, { type: contentType });
   file.isFetched = true;
+  file.url = url;
   return file;
 };
